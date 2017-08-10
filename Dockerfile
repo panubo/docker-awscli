@@ -1,13 +1,11 @@
-FROM python:latest
+FROM python:alpine
 
-ENV PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=0
+ENV PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=0 PAGER=more
 
-RUN apt-get update && \
-    # Install Requirements
-    apt-get install -y groff && \
+RUN apk --update add groff && \
     # Cleanup
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/cache/apk/*
 
-RUN pip install awscli
+RUN pip install --no-cache-dir awscli
 
 ENTRYPOINT ["/usr/local/bin/aws"]
