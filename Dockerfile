@@ -2,7 +2,7 @@ FROM python:alpine
 
 ENV PYTHONIOENCODING=UTF-8 PYTHONUNBUFFERED=0 PAGER=more
 
-RUN apk --update add groff && \
+RUN apk --update add bash groff && \
     # Cleanup
     rm -rf /var/cache/apk/*
 
