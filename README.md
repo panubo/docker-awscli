@@ -1,6 +1,6 @@
 # Docker AWS CLI
 
-A simple container with AWS CLI.
+A simple image with AWS CLI installed.
 
 ## Usage
 
