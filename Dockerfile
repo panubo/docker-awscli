@@ -24,6 +24,4 @@ RUN set -x \
   && rm -rf /tmp/* \
   ;
 
-#RUN if [ "${AWSCLI_VERSION}" == "latest" ]; then pip install --no-cache-dir awscli; else pip install --no-cache-dir awscli==${AWSCLI_VERSION}; fi
-
 ENTRYPOINT ["/usr/local/bin/aws"]
