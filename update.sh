@@ -5,7 +5,6 @@ set -e
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   osx_compat="g"
-  sha256sum() { sha256; }
 fi
 
 # Get all tags, sort by version, limit to v1.* and return the latest
@@ -17,6 +16,7 @@ echo "Latest: ${version}"
 if [[ ! -e awscli-bundle-${version}.zip ]]; then
   curl -sSf -o awscli-bundle-${version}.zip https://s3.amazonaws.com/aws-cli/awscli-bundle-${version}.zip
 fi
+
 checksum="$(sha256sum awscli-bundle-${version}.zip | ${osx_compat}sed -E -e 's/([0-9a-f]+) .*/\1/')"
 
 echo "Checksum: ${checksum}"
