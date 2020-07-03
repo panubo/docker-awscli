@@ -8,8 +8,13 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
 fi
 
 # Get all tags, sort by version, limit to v1.* and return the latest
-latest="$(curl -sSf https://api.github.com/repos/aws/aws-cli/tags | jq -r '.[] | .name' | sort -r --version-sort | grep '^1\.' | head -n1)"
+latest="$(curl -sSf https://api.github.com/repos/aws/aws-cli/tags?per_page=100 | jq -r '.[] | .name' | sort -r --version-sort | grep '^1\.' | head -n1)"
 version="${latest#v}"
+
+if [[ -z "${latest}" ]]; then
+  echo "Latest not found. Exiting."
+  exit 1
+fi
 
 echo "Latest: ${version}"
 
@@ -18,6 +23,8 @@ if [[ ! -e awscli-bundle-${version}.zip ]]; then
 fi
 
 checksum="$(sha256sum awscli-bundle-${version}.zip | ${osx_compat}sed -E -e 's/([0-9a-f]+) .*/\1/')"
+
+rm awscli-bundle-${version}.zip
 
 echo "Checksum: ${checksum}"
 
