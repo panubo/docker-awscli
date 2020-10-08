@@ -4,8 +4,8 @@ ENV \
   PYTHONIOENCODING=UTF-8 \
   PYTHONUNBUFFERED=0 \
   PAGER=more \
-  AWS_CLI_VERSION=1.18.93 \
-  AWS_CLI_CHECKSUM=37eaa4d25cb1b9786af4ab6858cce7dfca154d264554934690d99994a7bbd7a5
+  AWS_CLI_VERSION=1.18.155 \
+  AWS_CLI_CHECKSUM=b18f2b90ee3715b500d840bac0aeeff5fcc0e215454fce638b7f6a4cb87d3a05
 
 RUN set -x \
   && apk --update add --no-cache bash groff jq \
