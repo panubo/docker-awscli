@@ -13,6 +13,10 @@ env:
   IMAGE_NAME: panubo/awscli
   GITHUB_ROLE_ARN: arn:aws:iam::461800378586:role/GitHubECRPublic
 
+permissions:
+  id-token: write   # Required for OIDC
+  contents: read    # This is required for actions/checkout
+
 jobs:
   build_and_push:
 
