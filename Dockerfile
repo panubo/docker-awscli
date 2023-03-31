@@ -20,6 +20,7 @@ RUN set -x \
   && unzip awscli-bundle-${AWS_CLI_VERSION}.zip \
   && /tmp/awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws \
   && apk del wget unzip \
+  && rm -rf /var/cache/apk/* \
   && rm -rf /tmp/* \
   ;
 
