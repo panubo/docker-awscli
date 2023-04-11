@@ -10,7 +10,6 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: panubo/awscli
   GITHUB_ROLE_ARN: arn:aws:iam::461800378586:role/GitHubECRPublic
 
 permissions:
@@ -25,14 +24,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Get repo name
+        id: image_name
+        run: |
+          sed -E -e 's/docker-//' -e 's/^/image_name=/' <<<"${{ github.repository }}" >> "$GITHUB_OUTPUT"
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
           # list of Docker images to use as base name for tags
           images: |
-            quay.io/${{ env.IMAGE_NAME }}
-            public.ecr.aws/r8z9l9e1/awscli
+            quay.io/${{ steps.image_name.outputs.image_name }}
+            public.ecr.aws/${{ steps.image_name.outputs.image_name }}
           # generate Docker tags based on the following events/attributes
           tags: |
             # type=schedule
@@ -53,10 +57,11 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          role-to-assume: arn:aws:iam::461800378586:role/GitHubECRPublic
+          role-to-assume: ${{ env.GITHUB_ROLE_ARN }}
           aws-region: us-east-1
 
       - name: Login to ECR
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v2
         with:
           registry: public.ecr.aws
@@ -80,7 +85,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=gha
           load: true
-          tags: ${{ env.IMAGE_NAME }}:test
+          tags: ${{ steps.image_name.outputs.image_name }}:test
 
       # - name: Test
       #   run: |
