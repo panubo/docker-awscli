@@ -18,3 +18,6 @@ clean:
 
 run:  ## run image
 	docker run -t $(IMAGE_NAME):$(TAG)
+
+_ci_test:
+	echo "NOOP"
