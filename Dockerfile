@@ -1,11 +1,11 @@
-FROM python:3.10-alpine3.17
+FROM python:3.10-alpine3.19
 
 ENV \
   PYTHONIOENCODING=UTF-8 \
   PYTHONUNBUFFERED=0 \
   PAGER=more \
-  AWS_CLI_VERSION=1.27.165 \
-  AWS_CLI_CHECKSUM=c90a9405382b7bcfca8e795252cf7e04fff56734b6c0aeef179ff8c5a4f2c336
+  AWS_CLI_VERSION=1.32.10 \
+  AWS_CLI_CHECKSUM=f6a1ff64f7a4162eead497c112ba3c1842506da014621f4f599fe60ccb68ec86
 
 RUN set -x \
   && apk --update add --no-cache bash groff jq \
